@@ -49,13 +49,10 @@ PSD_r200=PSD_trans.*(abs(HV200).^2);
 %Conversão Log - Linear----------------------------------------------------
 PSD_rx50=10.*log10(abs(PSD_r50));
 PSD_rx200=10.*log10(abs(PSD_r200));
-Ruido=10.^(BgNoise./10);
-Gap=10.^(GapSnr./10);
-Marg=10.^(MargSnr./10);
-Ganho=10.^(GainSnr./10);
+
 
 %--------------------------------------------------------------------------
-%GAMMA=Gap+(Marg-Ganho);
+
 GAMMA=10.^((GapSnr+(MargSnr-GainSnr))./10);
 
 b50=floor(log2(1+(PSD_r50./(GAMMA.*Ruido))));
@@ -100,7 +97,7 @@ R200=k*sum(B200)
 
 
 %--------------------------------------------------------------------------
-%{
+%{ Plot dos Coeficientes. 
 figure
 
 plot(f,gamma1)
@@ -138,12 +135,6 @@ xlabel( 'Freq(Hz)' );
 
 figure
 plot(f,PSD_rx50)
-title('PSD Recebida 50m')
-ylabel('dBm');
-xlabel( 'Freq(Hz)' );
-
-figure
-plot(f,PSD_rx200)
 title('PSD Recebida 50m')
 ylabel('dBm');
 xlabel( 'Freq(Hz)' );
